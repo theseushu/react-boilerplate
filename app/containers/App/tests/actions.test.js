@@ -1,5 +1,3 @@
-import expect from 'expect';
-
 import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
@@ -17,6 +15,7 @@ describe('App Actions', () => {
     it('should return the correct type', () => {
       const expectedResult = {
         type: LOAD_REPOS,
+        username: undefined,
       };
 
       expect(loadRepos()).toEqual(expectedResult);

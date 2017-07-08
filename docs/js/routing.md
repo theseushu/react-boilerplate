@@ -20,7 +20,7 @@ This is what a standard (generated) route looks like for a container:
   name: 'home',
   getComponent(nextState, cb) {
     const importModules = Promise.all([
-      System.import('containers/HomePage')
+      import('containers/HomePage')
     ]);
 
     const renderRoute = loadModule(cb);
@@ -54,7 +54,7 @@ For example, if you have a route called `about` at `/about` and want to make a c
   name: 'about',
   getComponent(nextState, cb) {
     const importModules = Promise.all([
-      System.import('containers/AboutPage'),
+      import('containers/AboutPage'),
     ]);
 
     const renderRoute = loadModule(cb);
@@ -71,7 +71,7 @@ For example, if you have a route called `about` at `/about` and want to make a c
       name: 'team',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/TeamPage'),
+          import('containers/TeamPage'),
         ]);
 
         const renderRoute = loadModule(cb);
@@ -97,7 +97,7 @@ To add an index route, use the following pattern:
   name: 'home',
   getComponent(nextState, cb) {
     const importModules = Promise.all([
-      System.import('containers/HomePage')
+      import('containers/HomePage')
     ]);
 
     const renderRoute = loadModule(cb);
@@ -111,7 +111,7 @@ To add an index route, use the following pattern:
   indexRoute: {
     getComponent(partialNextState, cb) {
       const importModules = Promise.all([
-        System.import('containers/HomeView')
+        import('containers/HomeView')
       ]);
 
       const renderRoute = loadModule(cb);
@@ -135,9 +135,9 @@ path: '/posts/:slug',
 name: 'post',
 getComponent(nextState, cb) {
  const importModules = Promise.all([
-   System.import('containers/Post/reducer'),
-   System.import('containers/Post/sagas'),
-   System.import('containers/Post'),
+   import('containers/Post/reducer'),
+   import('containers/Post/sagas'),
+   import('containers/Post'),
  ]);
 
  const renderRoute = loadModule(cb);
@@ -195,9 +195,9 @@ export function* getXhrPodcast(slug) {
 }
 ```
 
-Wait (`take`) for the LOAD_POST constant, which contains the slug payload from the `getPost()` function in actions.js. 
+Wait (`take`) for the LOAD_POST constant, which contains the slug payload from the `getPost()` function in actions.js.
 
 When the action is fired then dispatch the `getXhrPodcast()` function to get the response from your api. On success dispatch the `postLoaded()` action (`yield put`) which sends back the response and can be added into the reducer state.
 
 
-You can read more on [`react-router`'s documentation](https://github.com/reactjs/react-router/blob/master/docs/API.md#props-3).
+You can read more on [`react-router`'s documentation](https://reacttraining.com/react-router/web/api).

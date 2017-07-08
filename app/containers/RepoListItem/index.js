@@ -5,16 +5,17 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { FormattedNumber } from 'react-intl';
 
+import { makeSelectCurrentUser } from 'containers/App/selectors';
+import ListItem from 'components/ListItem';
 import IssueIcon from './IssueIcon';
 import IssueLink from './IssueLink';
-import ListItem from 'components/ListItem';
 import RepoLink from './RepoLink';
 import Wrapper from './Wrapper';
-import { selectCurrentUser } from 'containers/App/selectors';
 
 export class RepoListItem extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -48,11 +49,10 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 }
 
 RepoListItem.propTypes = {
-  item: React.PropTypes.object,
-  currentUser: React.PropTypes.string,
+  item: PropTypes.object,
+  currentUser: PropTypes.string,
 };
 
-export default connect(createSelector(
-  selectCurrentUser(),
-  (currentUser) => ({ currentUser })
-))(RepoListItem);
+export default connect(createStructuredSelector({
+  currentUser: makeSelectCurrentUser(),
+}))(RepoListItem);

@@ -1,7 +1,17 @@
 /**
  * Language Generator
  */
+const fs = require('fs');
 const exec = require('child_process').exec;
+
+function languageIsSupported(language) {
+  try {
+    fs.accessSync(`app/translations/${language}.json`, fs.F_OK);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 module.exports = {
   description: 'Add a language',
@@ -12,7 +22,7 @@ module.exports = {
     default: 'fr',
     validate: (value) => {
       if ((/.+/).test(value) && value.length === 2) {
-        return true;
+        return languageIsSupported(value) ? `The language "${value}" is already supported.` : true;
       }
 
       return '2 character language specifier is required';
@@ -60,7 +70,7 @@ module.exports = {
     actions.push({
       type: 'modify',
       path: '../../app/app.js',
-      pattern: /(System\.import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),\n)(?!.*System\.import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),)/g,
+      pattern: /(import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),\n)(?!.*import\('intl\/locale-data\/jsonp\/[a-z]+\.js'\),)/g,
       templateFile: './language/polyfill-intl-locale.hbs',
     });
     actions.push(
@@ -72,6 +82,7 @@ module.exports = {
           }
           process.stdout.write(result);
         });
+        return 'modify translation messages';
       }
     );
 
